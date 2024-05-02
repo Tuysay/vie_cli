@@ -15,12 +15,12 @@
         <div>
           <button @click="toMain">Back</button>
           <button type="submit">Login</button>
-          <!-- Добавлено -->
+
           <div v-if="loading" class="loading">Загрузка...</div>
         </div>
       </form>
     </div>
-    <!-- Перемещено внутрь блока form -->
+
     <div v-if="errors" class="error">{{ error }}</div>
   </div>
 </template>
@@ -92,10 +92,59 @@ export default {
 </script>
 
 <style>
+form {
+  margin-top: 20px;
+}
+
 .loading {
-  color: #007bff; /* Цвет загрузки */
-  font-size: 14px;
+  color: #333;
+  font-size: 18px;
   margin-top: 10px;
 }
 
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+
+
+button {
+  background-color: #d4af37;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b39025;
+}
+
+input {
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #b39025;
+}
+
+textarea {
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  height: 50px;
+  resize: none;
+}
 </style>

@@ -20,9 +20,7 @@
       </form>
 
     </div>
-    <div v-if="errors">
-      {{ error }}
-    </div>
+    <div v-if="errors" class="error">{{ error }}</div>
   </div>
 </template>
 
@@ -89,3 +87,67 @@ export default {
   }
 }
 </script>
+
+<style>
+/* Стили для формы */
+form {
+  margin-top: 20px;
+}
+
+/* Стили для индикатора загрузки */
+.loading {
+  color: #333;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Стили для сообщения об ошибке */
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Дополнительные стили */
+
+
+
+button {
+  background-color: #d4af37;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b39025;
+}
+
+input {
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #b39025;
+}
+
+textarea {
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  height: 50px;
+  resize: none;
+}
+</style>
+

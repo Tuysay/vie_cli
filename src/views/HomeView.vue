@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <nav>
       <router-link to="/">Main</router-link>
       |
@@ -7,73 +8,113 @@
       |
       <router-link to="/login">Sign in</router-link>
     </nav>
-    <h1>Sigh in</h1>
+    <h1>Home Page</h1>
     <div>
-      <form @submit.prevent="login">
-        <input type="email" v-model="email" placeholder="email">
-        <input type="password" v-model="password" placeholder="Password">
+
+      <form @submit.prevent="loadData">
         <div>
-          <button @click="toMain">Back</button>
-          <button type="submit">Login</button>
+
+          <button type="submit">Load Data</button>
+
+          <div v-if="loading" class="loading">Loading...</div>
         </div>
       </form>
-
     </div>
-    <div class="show-error" v-if="errors">
-      {{ error }}
-    </div>
+    <!-- Сообщение об ошибке -->
+    <div v-if="error" class="error">{{ error }}</div>
 
+    <div v-if="data">{{ data }}</div>
   </div>
 </template>
 
 <script>
+import { thisUrl } from "@/utils/api";
 
-import {thisUrl} from "@/utils/api";
 export default {
   data() {
     return {
-
-      email: '',
-      password: '',
-      error: '',
-      errors: false
-    }
+      loading: false,
+      error: "",
+      data: null,
+    };
   },
   methods: {
-    async login() {
-      const url = thisUrl() + "/login";
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: this.email,
-          password: this.password
-        })
-      });
-      if (response.ok) {
-        const userToken = await response.json();
-        localStorage.setItem('userToken', userToken.data.user_token);
-        this.$router.push('/');
-      } else {
-        this.error = 'Failed login'
-        this.email = ''
-        this.password = ''
-        this.errors = true;
-        setTimeout(() => {
-          this.errors = false;
-        }, 3000);
+    async loadData() {
+      try {
+        this.loading = true;
+        const url = thisUrl() + "/data";
+        const response = await fetch(url);
+        if (response.ok) {
+          this.data = await response.json();
+        } else {
+          throw new Error("Failed to load data");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        this.error = "Failed to load data";
+      } finally {
+        this.loading = false;
       }
-
     },
-    toMain() {
-      this.$router.push('/');
-    }
-
-  }
-}
+  },
+};
 </script>
+<style>
+form {
+  margin-top: 20px;
+}
+
+.loading {
+  color: #333;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
 
 
+
+
+button {
+  background-color: #d4af37;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b39025;
+}
+
+input {
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #b39025;
+}
+
+textarea {
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  height: 50px;
+  resize: none;
+}
+</style>
 
