@@ -52,10 +52,11 @@ export default {
       } catch (error) {
         console.error("Error:", error);
         this.error = "Failed to load data";
+        throw error;
       } finally {
         this.loading = false;
       }
-    },
+    }
   },
 };
 </script>
