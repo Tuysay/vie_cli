@@ -15,6 +15,12 @@
           <router-link to="/cart">Catalog</router-link>
         |
           <router-link to="/orders">My orders</router-link>
+        <a href="#" class="tooltip">
+        <span>Hover me</span>
+        <div class="tooltip-text">
+          <img src="../assets/Screenshot%202024-05-03%20150332.png" alt="Image">
+        </div>
+      </a>
         </span>
     </nav>
     <div>
@@ -177,5 +183,34 @@ export default {
 
 .btn:hover {
   background-color: #b39025;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: 1;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
 }
 </style>
