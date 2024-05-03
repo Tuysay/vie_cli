@@ -92,25 +92,23 @@ export default {
 </script>
 
 <style>
-/* Стили для формы */
+
 form {
   margin-top: 20px;
 }
 
-/* Стили для индикатора загрузки */
+
 .loading {
   color: #333;
   font-size: 18px;
   margin-top: 10px;
 }
 
-/* Стили для сообщения об ошибке */
+
 .error {
   color: red;
   margin-top: 10px;
 }
-
-/* Дополнительные стили */
 
 
 
@@ -136,6 +134,7 @@ input {
   padding: 10px;
   margin-bottom: 10px;
   font-size: 16px;
+  margin-left: 5px;
 }
 
 input:focus {
@@ -154,4 +153,3 @@ textarea {
 }
 
 </style>
-

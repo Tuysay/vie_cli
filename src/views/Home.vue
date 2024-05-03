@@ -17,7 +17,7 @@
           <router-link to="/orders">My orders</router-link>
         </span>
     </nav>
-      <div>
+    <div>
       <h1>Product list:</h1>
       <div>
         <div v-for="product in products" :key="product.id" class="product">
@@ -50,7 +50,8 @@ export default {
     return {
       products: [],
       productsInCart: [],
-      added: false
+      added: false,
+      error: '',
     }
   },
   mounted() {
@@ -92,7 +93,7 @@ export default {
         });
 
         if (!response.ok) {
-           Error("Failed to add product to cart");
+          Error("Failed to add product to cart");
         }
 
         const existingItemIndex = this.productsInCart.findIndex(item => item.id === product.id);

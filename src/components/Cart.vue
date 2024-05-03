@@ -1,6 +1,8 @@
+
+
 <template>
-  <div>
-    <nav>
+  <div class="home">
+    <nav class="navbar">
       <router-link to="/">Main</router-link>
       <router-link to="/cart">Cart</router-link>
       <router-link to="/orders">My orders</router-link>
@@ -51,7 +53,8 @@ export default {
     return {
       productsCart: [],
       myOrder: [],
-      quantity: 1
+      quantity: 1,
+      error: '',
     };
   },
   created() {
@@ -59,21 +62,29 @@ export default {
   },
   methods: {
     async getProductCart() {
-      const localToken = localStorage.getItem('userToken');
-      if (!localToken) {
+      const userToken = localStorage.getItem('userToken');
+      if (!userToken) {
         return;
       }
+
       const url = thisUrl() + "/cart";
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${localToken}`
-        },
-      });
-      if (response.ok) {
+
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${userToken}`
+          },
+        });
+
+        if (!response.ok) {
+          Error("Failed to fetch cart data");
+        }
+
         const result = await response.json();
         const productsInCart = {};
+
         result.data.forEach(product => {
           if (productsInCart[product.product_id]) {
             productsInCart[product.product_id].quantity++;
@@ -81,9 +92,14 @@ export default {
             productsInCart[product.product_id] = {...product, quantity: 1};
           }
         });
+
         this.productsCart = Object.values(productsInCart);
+      } catch (error) {
+        console.error("Error:", error);
+        this.error = "Failed to fetch cart data";
       }
     },
+
     async removeFromCart(product) {
       const userToken = localStorage.getItem('userToken');
       if (!userToken) {
