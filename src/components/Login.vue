@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <nav>
+  <div class="home">
+    <nav class="navbar">
       <router-link to="/">Main</router-link>
       |
       <router-link to="/registration">Sign up</router-link>
@@ -11,7 +11,7 @@
     <div>
       <form @submit.prevent="login">
         <input type="email" v-model="email" placeholder="email" required>
-        <input type="password" v-model="password" placeholder="Password" minlength="4" required>
+        <input type="password" v-model="password" placeholder="Password" minlength="6" required>
         <div>
           <button @click="toMain">Back</button>
           <button type="submit">Login</button>
@@ -147,4 +147,5 @@ textarea {
   height: 50px;
   resize: none;
 }
+
 </style>

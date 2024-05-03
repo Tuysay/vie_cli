@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <nav>
+  <div class="home">
+    <nav class="navbar">
       <router-link to="/">Main</router-link>
       |
       <router-link to="/registration">Sign up</router-link>
@@ -8,9 +8,9 @@
     <h1>Sign up</h1>
     <div>
       <form @submit.prevent="register" class="register">
-        <input v-model="fio" placeholder="fio">
+        <input v-model="fio"  maxlength="20" placeholder="fio">
         <input type="email" v-model="email" placeholder="email" required>
-        <input type="password" v-model="password" placeholder="Password" minlength="4" required>
+        <input type="password" v-model="password" placeholder="Password" minlength="6" required>
         <div>
           <button @click="toMain">Back</button>
           <button type="submit">Sign up</button>
@@ -83,6 +83,9 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    toMain() {
+      this.$router.push('/');
     }
   }
 }
@@ -149,5 +152,6 @@ textarea {
   height: 50px;
   resize: none;
 }
+
 </style>
 

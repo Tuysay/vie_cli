@@ -12,7 +12,7 @@
       <span v-if="isAuthenticated">
           <router-link to="/" @click="logout">Sign out</router-link>
         |
-          <router-link to="/cart">Cart</router-link>
+          <router-link to="/cart">Catalog</router-link>
         |
           <router-link to="/orders">My orders</router-link>
         </span>
@@ -70,7 +70,7 @@ export default {
           const result = await response.json();
           this.products = result.data;
         } else {
-          throw new Error("Error fetching products");
+          Error("Error fetching products");
         }
       } catch (error) {
         console.error("Error:", error);
@@ -82,6 +82,7 @@ export default {
         const productId = product.id;
         const url = thisUrl() + `/cart/${productId}`;
         const userToken = localStorage.getItem('userToken');
+
         const response = await fetch(url, {
           method: "POST",
           headers: {
@@ -89,19 +90,21 @@ export default {
             "Authorization": `Bearer ${userToken}`
           }
         });
-        if (response.ok) {
-          const existingItemIndex = this.productsInCart.findIndex(item => item.id === product.id);
-          if (existingItemIndex !== -1) {
-            this.productsInCart[existingItemIndex].quantity++;
-          } else {
-            this.productsInCart.push({ ...product, quantity: 1 });
-          }
-          this.added = true;
-          await new Promise(resolve => setTimeout(resolve, 2000)); // Ожидание 2 секунды
-          this.added = false;
-        } else {
-          new Error("Failed to add product to cart");
+
+        if (!response.ok) {
+           Error("Failed to add product to cart");
         }
+
+        const existingItemIndex = this.productsInCart.findIndex(item => item.id === product.id);
+        if (existingItemIndex !== -1) {
+          this.productsInCart[existingItemIndex].quantity++;
+        } else {
+          this.productsInCart.push({ ...product, quantity: 1 });
+        }
+
+        this.added = true;
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Ожидание 2 секунды
+        this.added = false;
       } catch (error) {
         console.error("Error:", error);
         this.error = error.message || "Failed to add product to cart";
@@ -123,24 +126,23 @@ export default {
 
 <style>
 .home {
-  font-family: 'Roboto', sans-serif;
+  padding: 20px;
 }
 
 .navbar {
-  background-color: #333;
-  padding: 10px 20px;
-  color: #fff;
-  margin-top: -8px;
-  margin-left: -8px;
+  background-color: #f4ede6;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .navbar a {
-  color: #fff;
+  margin-right: 10px;
+  color: #333;
   text-decoration: none;
 }
 
 .navbar a:hover {
-  text-decoration: underline;
+  color: #b39025;
 }
 
 .product {
